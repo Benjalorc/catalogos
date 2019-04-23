@@ -2,10 +2,7 @@ import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  Validators,
-  MinLengthValidator,
-  AbstractControl,
-  ValidationErrors
+  Validators
 } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 

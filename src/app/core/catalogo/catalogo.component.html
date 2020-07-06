@@ -14,7 +14,23 @@
 		</mat-form-field>
 	</div>
 	<div class="busqueda bg-success"></div>
-	<div class="catalogo bg-primary"></div>
+	<div class="catalogo">
+		<mat-card class="movie-item" *ngFor="let movie of peliculas">
+		  <mat-card-header>
+		  	<div class="split">
+			    <h6 class="text-secondary">{{movie.titulo}}</h6>
+		    	<button mat-mini-fab color="basic">
+		    		<mat-icon>close</mat-icon>
+		    	</button>
+		  	</div>
+		  </mat-card-header>
+		  <mat-card-content>
+		  	<h6 class="genre">{{getGenre(movie.generoId)}}</h6>
+		  	<h6 class="text-secondary">Fecha de estreno: {{parseDate(movie.fechaEstreno)}}</h6>
+		    <p>{{movie.sinopsis}}</p>
+		  </mat-card-content>
+		</mat-card>
+	</div>
 </div>
 
 <div class="spinner-content"

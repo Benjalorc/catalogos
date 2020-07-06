@@ -78,10 +78,38 @@
 
 	display: grid;
 	grid-gap: 1rem;
+	padding: 1rem;
+
+	>.movie-item {
+
+		&:last-child{ margin-bottom: 2rem; }
+
+		@media only screen and(min-width: 768px){
+			height: 25rem;
+		}
+
+		.genre{ padding-left: 1rem; }
+
+		.split{
+			display: grid;
+			grid-template-columns: 1fr 40px;
+			width: 100%;
+
+			>h6{
+				text-align: left;
+				align-self: end;
+			}
+		}
+
+		::ng-deep .mat-card-header-text{
+			display: none;
+		}
+	}
 
 	@media only screen and (min-width: 768px){
 		grid-template-columns: repeat(2, 1fr);
 		height: calc(100vh - 7rem);
+		overflow: auto;
 	}
 	@media only screen and (min-width: 992px){
 		grid-template-columns: repeat(3, 1fr);

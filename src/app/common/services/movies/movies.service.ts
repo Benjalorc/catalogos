@@ -15,6 +15,16 @@ export interface ListadoGeneros {
   listado: Genero[]
 }
 
+export interface Pelicula {
+  id: number;
+  titulo: string;
+  sinopsis: string;
+  generoId: number;
+  director: string;
+  fechaEstreno: string;
+  idAppUser: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -40,7 +50,42 @@ export class MoviesService {
         .subscribe(
           (response) => {
             observer.next(response);
-            this.initMessage('Login succesful, Welcome!');
+            this.initMessage('Genres found!');
+          },
+          (error) => {
+            const errorResponse = error.error;
+
+            if (errorResponse.error && errorResponse.error.statusCode) {
+              switch (errorResponse.error.statusCode) {
+                case 401: {
+                  this.initMessage('Search failed, Unauthorized');
+                  break;
+                }
+                default: {
+                  this.initMessage('Search failed');
+                }
+              }
+            } else {
+              this.initMessage('Search failed');
+            }
+
+            observer.error(error);
+          },
+          () => {
+            observer.complete();
+          }
+        );
+    });
+  }
+
+
+  listarPeliculas(genero): Observable<Pelicula[]> {
+    return new Observable<Pelicula[]>(observer => {
+      this.http.get<any>(`${this.baseUrl}generos/${genero}/peliculas`)
+        .subscribe(
+          (response) => {
+            observer.next(response);
+            this.initMessage('Movies found!');
           },
           (error) => {
             const errorResponse = error.error;

@@ -48,9 +48,9 @@ export class LoginService {
           (response) => {
             this.parserResponseSuccess(response, remember);
             observer.next(response);
+            this.initMessage('Login succesful, Welcome!');
 
-            // TODO: Ruta redired al hacer login 'CHANGE: catalogos to router path'
-            // this.router.navigate(['catalogos']);
+            this.router.navigate(['catalogo']);
           },
           (error) => {
             const errorResponse = error.error;

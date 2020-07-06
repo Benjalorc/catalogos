@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: './login/login.module#LoginModule'
   },
   {
+    path: 'catalogo',
+    loadChildren: './catalogo/catalogo.module#CatalogoModule'
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'

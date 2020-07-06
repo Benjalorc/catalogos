@@ -1,0 +1,56 @@
+.grid{
+
+	display: grid;
+	padding: 1rem 1rem 2rem 1rem;
+	grid-gap: 1rem;
+	grid-template-areas:
+		"generos"
+		"busqueda"
+		"catalogo";
+
+	>.generos{grid-area: generos}
+	>.busqueda{grid-area: busqueda}
+	>.catalogo{grid-area: catalogo}
+
+	@media only screen and (min-width: 768px){
+
+		grid-template-columns: 12em calc(100vw - 12em - 3rem);
+		grid-template-areas:
+			"generos busqueda"
+			"generos catalogo";
+	}
+}
+
+.generos{
+
+	display: grid;
+	height: 3rem;
+
+	@media only screen and (min-width: 768px){
+		height: calc(100vh - 3rem);
+	}
+}
+
+.busqueda{
+	display: flex;
+	justify-content: center;
+	paddding: 0 2rem;
+	height: 3rem;
+}
+
+.catalogo{
+
+	display: grid;
+	grid-gap: 1rem;
+
+	@media only screen and (min-width: 768px){
+		grid-template-columns: repeat(2, 1fr);
+		height: calc(100vh - 7rem);
+	}
+	@media only screen and (min-width: 992px){
+		grid-template-columns: repeat(3, 1fr);
+	}
+	@media only screen and (min-width: 1200px){
+		grid-template-columns: repeat(4, 1fr);
+	}
+}

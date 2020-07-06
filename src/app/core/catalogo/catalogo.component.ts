@@ -16,6 +16,7 @@ export class CatalogoComponent implements OnInit {
 	atajo_generos: any[];
 	peliculas: Pelicula[];
 	nueva_pelicula: Pelicula;
+	filtro: string = "";
 
 	addMovieOn = false;
   isLoad = false;
@@ -54,11 +55,11 @@ export class CatalogoComponent implements OnInit {
   	});
   }
 
-  listarPeliculas(genero){
+  filtrarPeliculas(){
 
   	this.isLoad = true;
   	this.peliculas = [];
-  	this.moviesService.listarPeliculas(genero).subscribe(data => {
+  	this.moviesService.filtrarPeliculas(this.filtro, this.generoSeleccionado).subscribe(data => {
 
   		this.peliculas = data;
   		this.isLoad = false;
@@ -67,6 +68,35 @@ export class CatalogoComponent implements OnInit {
 
   		this.isLoad = false;
   	});
+  }
+
+  listarPeliculas(genero, keep){
+
+  	this.isLoad = true;
+  	if(!keep) this.peliculas = [];
+  	this.moviesService.listarPeliculas(genero).subscribe(data => {
+
+  		if(keep){
+
+	  		this.peliculas.unshift(...data);
+  		}else{
+	  		this.peliculas = data;
+	  		this.isLoad = false;
+  		}
+  	},
+  	err => {
+
+  		this.isLoad = false;
+  	});
+  }
+
+  listarTodas(){
+
+  	this.peliculas = [];
+		this.generos.forEach(async (el, index)=>{
+			if(index === this.generos.length-1) return this.isLoad = false;
+			await this.listarPeliculas(el.id, true);
+		});
   }
 
   agregarPelicula(){
@@ -139,7 +169,14 @@ export class CatalogoComponent implements OnInit {
   	domList[index].classList.add("active");
   	this.generoSeleccionado = item.id;
 
-  	this.listarPeliculas(this.generoSeleccionado);
+  	if(this.generoSeleccionado === null){
+
+  		this.listarTodas();
+  	}
+  	else{
+
+  		this.listarPeliculas(this.generoSeleccionado, true);
+  	}
   }
 
   parseDate(fecha){

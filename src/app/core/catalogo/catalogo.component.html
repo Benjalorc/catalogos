@@ -13,12 +13,12 @@
 		  </mat-select>
 		</mat-form-field>
 	</div>
-	<div class="busqueda bg-success">
+	<div class="busqueda">
 	  <mat-form-field>
-		  <button mat-button matPrefix mat-icon-button aria-label="Clear" (click)="nueva_pelicula.titulo=''">
+		  <button mat-button matPrefix mat-icon-button aria-label="Clear" (click)="filtrarPeliculas()">
 		    <mat-icon>search</mat-icon>
 		  </button>
-	    <input matInput type="text" placeholder="Ingrese su búsqueda">
+	    <input matInput type="text" [(ngModel)]="filtro" placeholder="Ingrese su búsqueda">
 		  <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="nueva_pelicula.titulo=''">
 		    <mat-icon>clear</mat-icon>
 		  </button>

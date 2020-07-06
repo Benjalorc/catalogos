@@ -82,6 +82,15 @@
 
 	>.movie-item {
 
+		&.new-movie {
+			::ng-deep mat-form-field{
+				width: 100%;
+			}
+			mat-form-field textarea {
+				resize: none;
+			}
+		}
+
 		&:last-child{ margin-bottom: 2rem; }
 
 		@media only screen and(min-width: 768px){
@@ -117,6 +126,12 @@
 	@media only screen and (min-width: 1200px){
 		grid-template-columns: repeat(4, 1fr);
 	}
+}
+
+.add-movie{
+	position: fixed;
+	bottom: 3rem;
+	right: 3rem;
 }
 
 .spinner-content {

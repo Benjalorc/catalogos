@@ -3,6 +3,8 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
   MatProgressSpinnerModule,
   MatButtonModule,
   MatCardModule,
@@ -17,6 +19,8 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatButtonModule,
     MatCardModule,
     MatSnackBarModule,
@@ -28,11 +32,14 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatButtonModule,
     MatCardModule,
     MatSnackBarModule,
     MatIconModule,
     MatCheckboxModule
-  ]
+  ],
+  providers: [MatDatepickerModule]
 })
 export class MaterialModule { }

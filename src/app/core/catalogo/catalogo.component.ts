@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
 import { MoviesService, ListadoGeneros, Pelicula } from '@common/services/movies';
 
@@ -14,6 +15,9 @@ export class CatalogoComponent implements OnInit {
 	generos: ListadoGeneros;
 	atajo_generos: any[];
 	peliculas: Pelicula[];
+	nueva_pelicula: Pelicula;
+
+	addMovieOn = false;
   isLoad = false;
 
   constructor(
@@ -57,6 +61,58 @@ export class CatalogoComponent implements OnInit {
   	this.moviesService.listarPeliculas(genero).subscribe(data => {
 
   		this.peliculas = data;
+  		this.isLoad = false;
+  	},
+  	err => {
+
+  		this.isLoad = false;
+  	});
+  }
+
+  agregarPelicula(){
+
+  	this.nueva_pelicula = {
+		  id: null,
+		  titulo: "",
+		  sinopsis: "",
+		  generoId: null,
+		  director: "",
+		  fechaEstreno: "",
+		  appUserId: null,
+		};
+		this.addMovieOn = true;
+  }
+
+  guardarPelicula(){
+
+  	this.isLoad = true;
+  	this.moviesService.guardarPelicula({...this.nueva_pelicula}).subscribe(data => {
+
+  		this.peliculas.unshift(data);
+  		this.cancelarPelicula();
+  		this.isLoad = false;
+  	},
+  	err => {
+
+  		this.isLoad = false;
+  	});
+  }
+
+  cancelarPelicula(){
+  	this.addMovieOn = false;
+  	this.nueva_pelicula = null;
+  }
+
+  asignarFechaPelicula(tipo: string, event: MatDatepickerInputEvent<Date>){
+  	this.nueva_pelicula.fechaEstreno = event.value;
+  }
+
+  borrarPelicula(movie){
+
+  	this.isLoad = true;
+  	this.moviesService.borrarPelicula(movie).subscribe(data => {
+
+  		this.peliculas = this.peliculas.filter((e)=> e.id !== movie.id);
   		this.isLoad = false;
   	},
   	err => {

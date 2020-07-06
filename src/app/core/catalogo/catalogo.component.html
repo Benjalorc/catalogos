@@ -13,13 +13,59 @@
 		  </mat-select>
 		</mat-form-field>
 	</div>
-	<div class="busqueda bg-success"></div>
+	<div class="busqueda bg-success">
+	  <mat-form-field>
+		  <button mat-button matPrefix mat-icon-button aria-label="Clear" (click)="nueva_pelicula.titulo=''">
+		    <mat-icon>search</mat-icon>
+		  </button>
+	    <input matInput type="text" placeholder="Ingrese su búsqueda">
+		  <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="nueva_pelicula.titulo=''">
+		    <mat-icon>clear</mat-icon>
+		  </button>
+	  </mat-form-field>
+	</div>
 	<div class="catalogo">
+		<mat-card class="new-movie movie-item" *ngIf="addMovieOn">
+		  <mat-card-content>
+
+		    <h6>Titulo</h6>
+				<mat-form-field>
+				  <input matInput type="text" placeholder="Escriba el títutlo" [(ngModel)]="nueva_pelicula.titulo">
+				  <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="nueva_pelicula.titulo=''">
+				    <mat-icon>close</mat-icon>
+				  </button>
+				</mat-form-field>
+				<mat-form-field>
+				  <mat-label>Seleccione la categoría</mat-label>
+				  <mat-select [(ngModel)]="nueva_pelicula.generoId">
+				    <mat-option *ngFor="let item of generos" [value]="item.id">
+				      {{item.nombre}}
+				    </mat-option>
+				  </mat-select>
+				</mat-form-field>
+				<div class="inline">
+			    <h6>Fecha de estreno</h6>
+					<mat-form-field>
+					  <input matInput [matDatepicker]="picker" (dateInput)="asignarFechaPelicula('input', $event)" (dateChange)="asignarFechaPelicula('change', $event)">
+					  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+					  <mat-datepicker #picker></mat-datepicker>
+					</mat-form-field>
+				</div>
+			  <h6>Descripción</h6>
+			  <mat-form-field>
+			    <textarea matInput rows="3" [(ngModel)]="nueva_pelicula.sinopsis"></textarea>
+			  </mat-form-field>
+			  <mat-card-actions class="float-right">
+			    <button mat-button class="btn btn-success btn-sm" (click)="cancelarPelicula()">Cancelar</button>
+			    <button mat-button class="btn btn-primary btn-sm" (click)="guardarPelicula()">Guardar</button>
+			  </mat-card-actions>
+		  </mat-card-content>
+		</mat-card>
 		<mat-card class="movie-item" *ngFor="let movie of peliculas">
 		  <mat-card-header>
 		  	<div class="split">
 			    <h6 class="text-secondary">{{movie.titulo}}</h6>
-		    	<button mat-mini-fab color="basic">
+		    	<button mat-mini-fab color="basic" (click)="borrarPelicula(movie)">
 		    		<mat-icon>close</mat-icon>
 		    	</button>
 		  	</div>
@@ -32,6 +78,11 @@
 		</mat-card>
 	</div>
 </div>
+
+<button mat-mini-fab class="add-movie" (click)="agregarPelicula()">
+	<mat-icon>add</mat-icon>
+</button>
+
 
 <div class="spinner-content"
   *ngIf="isLoad">

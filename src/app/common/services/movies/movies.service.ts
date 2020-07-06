@@ -22,7 +22,7 @@ export interface Pelicula {
   generoId: number;
   director: string;
   fechaEstreno: string;
-  idAppUser: number;
+  appUserId: number;
 }
 
 @Injectable({
@@ -110,6 +110,92 @@ export class MoviesService {
             observer.complete();
           }
         );
+    });
+  }
+
+  guardarPelicula(movie){
+    return new Observable<Pelicula>(observer => {
+
+      let user_id = localStorage.getItem("user_id");
+      movie.appUserId = user_id;
+      movie.fechaEstreno = movie.fechaEstreno.toJSON();
+      delete movie.id; delete movie.director;
+
+      let token = localStorage.getItem("token");
+      this.http.post<any>(`${this.baseUrl}peliculas`, movie)
+        .subscribe(
+          (response) => {
+            observer.next(response);
+            this.initMessage('Movie saved!');
+          },
+          (error) => {
+            const errorResponse = error.error;
+
+            if (errorResponse.error && errorResponse.error.statusCode) {
+              switch (errorResponse.error.statusCode) {
+                case 401: {
+                  this.initMessage('Request failed, Unauthorized');
+                  break;
+                }
+                default: {
+                  this.initMessage('Request failed');
+                }
+              }
+            } else {
+              this.initMessage('Request failed');
+            }
+
+            observer.error(error);
+          },
+          () => {
+            observer.complete();
+          }
+        );
+    });
+  }
+
+  borrarPelicula(movie): Observable<Pelicula> {
+    return new Observable<Pelicula>(observer => {
+
+      let user_id = localStorage.getItem("user_id");
+      if(parseInt(user_id) !== movie.appUserId){
+
+        this.initMessage('No permissions for this action!');
+        observer.error('No permissions for this action!');
+        observer.complete();
+      }
+      else{
+
+        this.http.delete<any>(`${this.baseUrl}peliculas/${movie.id}`)
+          .subscribe(
+            (response) => {
+              observer.next(response);
+              this.initMessage('Movie deleted!');
+            },
+            (error) => {
+              const errorResponse = error.error;
+
+              if (errorResponse.error && errorResponse.error.statusCode) {
+                switch (errorResponse.error.statusCode) {
+                  case 401: {
+                    this.initMessage('Request failed, Unauthorized');
+                    break;
+                  }
+                  default: {
+                    this.initMessage('Request failed');
+                  }
+                }
+              } else {
+                this.initMessage('Request failed');
+              }
+
+              observer.error(error);
+            },
+            () => {
+              observer.complete();
+            }
+          );
+      }
     });
   }
 

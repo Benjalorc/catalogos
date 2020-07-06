@@ -24,10 +24,46 @@
 .generos{
 
 	display: grid;
+	grid-template-rows: 3rem auto;
 	height: 3rem;
+	padding: 1rem;
+
+	>ul, >h4{
+		display: none; 
+	}
 
 	@media only screen and (min-width: 768px){
+
+		.mat-form-field{ display: none; }
+
 		height: calc(100vh - 3rem);
+
+		>h4{
+			display: block;
+			border-bottom: solid 2px #000;
+		}
+		>ul{
+
+			display: block;
+			padding: 0;
+
+			>li{
+
+				list-style: none;
+				cursor: pointer;
+				transition: background-color 200ms;
+
+				&:hover{
+					background-color: rgba(0,0,0,0.5);
+					color: #fff;
+				}
+				&.active,
+				&:active{
+					color: #000;
+					background-color: #d6f5fa ;
+				}
+			}
+		}
 	}
 }
 
@@ -53,4 +89,15 @@
 	@media only screen and (min-width: 1200px){
 		grid-template-columns: repeat(4, 1fr);
 	}
+}
+
+.spinner-content {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
 }

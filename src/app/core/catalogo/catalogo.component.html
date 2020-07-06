@@ -1,5 +1,23 @@
 <div class="grid">
-	<div class="generos bg-info"></div>
+	<div class="generos">
+		<h4 class="text-center text-info">Géneros</h4>
+		<ul #ListaGeneros>
+			<li *ngFor="let item of generos; let i = index;" class="genre-item" (click)="seleccionarGenero(item, i)">{{item.nombre}}</li>
+		</ul>
+		<mat-form-field>
+		  <mat-label>Géneros</mat-label>
+		  <mat-select (selectionChange)="seleccionarGenero($event.value, null)">
+		    <mat-option *ngFor="let item of generos" [value]="item">
+		      {{item.nombre}}
+		    </mat-option>
+		  </mat-select>
+		</mat-form-field>
+	</div>
 	<div class="busqueda bg-success"></div>
 	<div class="catalogo bg-primary"></div>
+</div>
+
+<div class="spinner-content"
+  *ngIf="isLoad">
+  <mat-spinner></mat-spinner>
 </div>

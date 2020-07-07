@@ -95,6 +95,7 @@ export class CatalogoComponent implements OnInit {
   listarTodas(){
 
   	this.peliculas = [];
+  	this.isLoad = true;
 		this.generos.forEach(async (el, index)=>{
 			if(index === this.generos.length-1) return this.isLoad = false;
 			await this.listarPeliculas(el.id, true);

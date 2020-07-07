@@ -11,9 +11,6 @@ export interface Genero {
   nombre: string;
   descripcion: string;
 }
-export interface ListadoGeneros {
-  listado: Genero[]
-}
 
 export interface Pelicula {
   id: number;
@@ -157,7 +154,6 @@ export class MoviesService {
 
       let user_id = localStorage.getItem("user_id");
       movie.appUserId = user_id;
-      movie.fechaEstreno = movie.fechaEstreno.toJSON();
       delete movie.id; delete movie.director;
 
       let token = localStorage.getItem("token");

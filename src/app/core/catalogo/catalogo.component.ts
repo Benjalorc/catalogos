@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
-import { MoviesService, ListadoGeneros, Pelicula } from '@common/services/movies';
+import { MoviesService, Genero, Pelicula } from '@common/services/movies';
 
 @Component({
   selector: 'app-catalogo',
@@ -10,9 +10,9 @@ import { MoviesService, ListadoGeneros, Pelicula } from '@common/services/movies
 })
 export class CatalogoComponent implements OnInit {
 
-	@ViewChild("ListaGeneros", {static: false}) GenerosDom : ElementRef;
+	@ViewChild("ListaGeneros") GenerosDom : ElementRef;
 
-	generos: ListadoGeneros;
+	generos: Genero[];
 	atajo_generos: any[];
 	peliculas: Pelicula[];
 	nueva_pelicula: Pelicula;
@@ -20,6 +20,7 @@ export class CatalogoComponent implements OnInit {
 
 	addMovieOn = false;
   isLoad = false;
+  generoSeleccionado: number;
 
   constructor(
   	private moviesService: MoviesService,
@@ -134,7 +135,7 @@ export class CatalogoComponent implements OnInit {
   }
 
   asignarFechaPelicula(tipo: string, event: MatDatepickerInputEvent<Date>){
-  	this.nueva_pelicula.fechaEstreno = event.value;
+  	this.nueva_pelicula.fechaEstreno = event.value.toJSON();
   }
 
   borrarPelicula(movie){

@@ -81,6 +81,7 @@ export class CatalogoComponent implements OnInit {
 
 	  		this.peliculas.unshift(...data);
   		}else{
+
 	  		this.peliculas = data;
 	  		this.isLoad = false;
   		}
@@ -176,7 +177,7 @@ export class CatalogoComponent implements OnInit {
   	}
   	else{
 
-  		this.listarPeliculas(this.generoSeleccionado, true);
+  		this.listarPeliculas(this.generoSeleccionado, false);
   	}
   }
 

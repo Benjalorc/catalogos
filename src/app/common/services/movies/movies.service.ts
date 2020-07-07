@@ -41,9 +41,9 @@ export class MoviesService {
     });
   }
 
-  listarGeneros(): Observable<ListadoGeneros> {
+  listarGeneros(): Observable<Genero[]> {
 
-    return new Observable<ListadoGeneros>(observer => {
+    return new Observable<Genero[]>(observer => {
       this.http.get<any>(`${this.baseUrl}generos`)
         .subscribe(
           (response) => {

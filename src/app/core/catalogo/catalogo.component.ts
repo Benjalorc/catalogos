@@ -13,7 +13,7 @@ export class CatalogoComponent implements OnInit {
 	@ViewChild("ListaGeneros") GenerosDom : ElementRef;
 
 	generos: Genero[];
-	atajo_generos: any[];
+	atajo_generos: any;
 	peliculas: Pelicula[];
 	nueva_pelicula: Pelicula;
 	filtro: string = "";
